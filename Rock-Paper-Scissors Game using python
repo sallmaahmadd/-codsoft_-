@@ -22,7 +22,7 @@ def play_round():
     print("4. Exit")
 
     try:
-        user_choice_number = int(input("Enter your choice (1-4): "))
+        user_choice_number = int(input("Enter your choice {1-4}: "))
         if user_choice_number == 4:
             return None, None, "exit"
 
@@ -48,19 +48,31 @@ def display_result(winner, user_choice, computer_choice):
     else:
         print("Result: Computer wins!")
 
+def determine_game_winner(user_score, computer_score):
+    print("\n--- Final Results ---")
+    print(f"Your Score: {user_score}")
+    print(f"Computer's Score: {computer_score}")
+
+    if user_score > computer_score:
+        print("Congratulations! You are the ultimate winner!")
+    elif user_score < computer_score:
+        print("The computer is the ultimate winner!")
+    else:
+        print("It's a tie game overall!")
+
 def rock_paper_scissors_game():
     user_score = 0
     computer_score = 0
 
-    print("Welcome to Rock-Paper-Scissors!")
-    print("Rock beats Scissors, Scissors beat Paper, and Paper beats Rock.")
+    print("Welcome to Rock-Paper-Scissors Game!")
+    print("The Rules are simple! Rock beats Scissors, Scissors beat Paper, and Paper beats Rock.")
 
     while True:
         user_choice, computer_choice, status = play_round()
 
         if status == "exit":
-            print("Hope you enjoyed playing! Final Scores:")
-            print(f"You: {user_score}, Computer: {computer_score}")
+            determine_game_winner(user_score, computer_score)
+            print("Hope you enjoyed playing Rock-Paper-Scissors!")
             break
         elif status == "invalid":
             continue
@@ -78,9 +90,10 @@ def rock_paper_scissors_game():
 
         play_again = input("\nDo you want to play another round? (yes/no): ").strip().lower()
         if play_again != "yes":
-            print("Hope you enjoyed playing! Final Scores:")
-            print(f"You: {user_score}, Computer: {computer_score}")
+            determine_game_winner(user_score, computer_score)
+            print("Thanks for playing!")
             break
 
 if __name__ == "__main__":
     rock_paper_scissors_game()
+
