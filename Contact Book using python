@@ -1,0 +1,93 @@
+class ContactBook:
+    def __init__(self):
+        self.contacts = []
+
+    def add_contact(self, name, phone, email, address):
+        contact = {
+            "name": name,
+            "phone": phone,
+            "email": email,
+            "address": address
+        }
+        self.contacts.append(contact)
+        print(f"\nContact {name} added successfully!")
+
+    def view_contacts(self):
+        if not self.contacts:
+            print("\nNo contacts found!")
+        else:
+            print("\n--- Contact List ---")
+            for idx, contact in enumerate(self.contacts, 1):
+                print(f"{idx}. {contact['name']} - {contact['phone']}")
+
+    def search_contact(self, query):
+        results = [contact for contact in self.contacts if query.lower() in contact['name'].lower() or query in contact['phone']]
+        if results:
+            print("\n--- Search Results ---")
+            for contact in results:
+                print(f"Name: {contact['name']}, Phone: {contact['phone']}, Email: {contact['email']}, Address: {contact['address']}")
+        else:
+            print("\nNo contact was found with the given information!")
+
+    def update_contact(self, query):
+        for contact in self.contacts:
+            if query.lower() in contact['name'].lower() or query in contact['phone']:
+                print("\n--- Update Contact ---")
+                contact['name'] = input("Enter new name : ") or contact['name']
+                contact['phone'] = input("Enter new phone : ") or contact['phone']
+                contact['email'] = input("Enter new email : ") or contact['email']
+                contact['address'] = input("Enter new address : ") or contact['address']
+                print("\nContact updated successfully!")
+                return
+        print("\nNo contact was found to update!")
+
+    def delete_contact(self, query):
+        for contact in self.contacts:
+            if query.lower() in contact['name'].lower() or query in contact['phone']:
+                self.contacts.remove(contact)
+                print(f"\nContact {contact['name']} deleted successfully!")
+                return
+        print("\nNo contact was found to delete!")
+
+def main():
+    contact_book = ContactBook()
+    print("Welcome to the Contact Book!")
+
+    while True:
+        print("\n--- Menu ---")
+        print("1. Add Contact")
+        print("2. View Contact List")
+        print("3. Search Contact")
+        print("4. Update Contact")
+        print("5. Delete Contact")
+        print("6. Exit")
+
+        try:
+            choice = int(input("Enter your choice {1-6}: "))
+            if choice == 1:
+                name = input("\nEnter name: ")
+                phone = input("Enter phone: ")
+                email = input("Enter email: ")
+                address = input("Enter address: ")
+                contact_book.add_contact(name, phone, email, address)
+            elif choice == 2:
+                contact_book.view_contacts()
+            elif choice == 3:
+                query = input("\nEnter name or phone to search: ")
+                contact_book.search_contact(query)
+            elif choice == 4:
+                query = input("\nEnter name or phone to update: ")
+                contact_book.update_contact(query)
+            elif choice == 5:
+                query = input("\nEnter name or phone to delete: ")
+                contact_book.delete_contact(query)
+            elif choice == 6:
+                print("\nExiting Contact Book!")
+                break
+            else:
+                print("\nInvalid choice! Please choose between 1 and 6.")
+        except ValueError:
+            print("\nInvalid input! Please enter a number between 1 and 6.")
+
+if __name__ == "__main__":
+    main()
